@@ -41,6 +41,10 @@ from pyriemann.spatialfilters import CSP
 from pyriemann.tangentspace import TangentSpace
 from pyriemann.classification import MDM
 
+
+MAIN_PATH = '/home/peng/work/tx/test/'
+DEVICE_NAME = 'unicorn'
+FIG_PATH = MAIN_PATH
 ###################################################################################################
 # Load Data
 # ---------------------
@@ -48,17 +52,18 @@ from pyriemann.classification import MDM
 # ( See the ssvep `load_and_visualize` example for further description of this)
 #
 
-eegnb_data_path = os.path.join(os.path.expanduser('~/'),'.eegnb', 'data')    
-ssvep_data_path = os.path.join(eegnb_data_path, 'visual-SSVEP', 'eegnb_examples')
+#eegnb_data_path = os.path.join(os.path.expanduser('~/'),'.eegnb', 'data')    
+eegnb_data_path = os.path.join(MAIN_PATH,'eegnb', 'data') 
+#ssvep_data_path = os.path.join(eegnb_data_path, 'visual-SSVEP', 'eegnb_examples')
 
 # If dataset hasn't been downloaded yet, download it 
-if not os.path.isdir(ssvep_data_path):
-    fetch_dataset(data_dir=eegnb_data_path, experiment='visual-SSVEP', site='eegnb_examples')        
+#if not os.path.isdir(ssvep_data_path):
+#    fetch_dataset(data_dir=eegnb_data_path, experiment='visual-SSVEP', site='eegnb_examples')        
 
 subject = 1
 session = 1
 raw = load_data(subject, session, 
-                experiment='Summer_School_SSVEP', site='local', device_name='muse2_bfn',
+                experiment='Summer_School_SSVEP', site='local', device_name=DEVICE_NAME,
                 data_dir = eegnb_data_path,
                 replace_ch_names={'Right AUX': 'POz'})
 
@@ -155,3 +160,5 @@ fig = plt.figure(figsize=[8,4])
 sns.barplot(data=results, x='AUC', y='Method')
 plt.xlim(0.4, 1)
 sns.despine()
+
+plt.savefig(os.path.join(FIG_PATH, 'ssvep.png'))
