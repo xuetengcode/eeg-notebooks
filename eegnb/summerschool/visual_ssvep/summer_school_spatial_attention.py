@@ -76,7 +76,7 @@ class Summer_School_Spatial_Attention(Experiment.BaseExperiment):
 
         fixation = visual.GratingStim(win=self.window, size=0.2, pos=[0, 0], sf=0.2, color=FIXATION_COLOR, autoDraw=True)
 
-        self.arrow_left = visual.TextStim(win=self.window, text="""\n\<--""", color=[-1, -1, -1])
+        self.arrow_left = visual.TextStim(win=self.window, text="""\n<--""", color=[-1, -1, -1])
         self.arrow_right = visual.TextStim(win=self.window, text="""\n-->""", color=[-1, -1, -1])
 
         # Generate the possible ssvep frequencies based on monitor refresh rate
