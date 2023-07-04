@@ -9,7 +9,7 @@ from psychopy import visual, core, event
 
 from eegnb.devices.eeg import EEG
 from eegnb import generate_save_fn
-from eegnb.stimuli import SUMMER_SCHOOL, FACE_HOUSE
+from eegnb.stimuli import SUMMER_SCHOOL
 from eegnb.summerschool import Experiment_modified as Experiment
 
 ITI=0.4
@@ -35,7 +35,7 @@ y_offset = [0]
 
 
 STI_CHOICE=0 # 0 for the original gratings, 1 for the pictures specified below
-IMG_DISPLAY_SIZE=[20,10] #[10,10] #  width, height
+IMG_DISPLAY_SIZE=[40,20] #[10,10] #  width, height
 FOLDER1='houses'
 PHOTOEXT1='*.jpg'
 FOLDER2='mountains'
@@ -60,10 +60,8 @@ class Summer_School_VisualSSVEP(Experiment.BaseExperiment):
         load_image = lambda fn: visual.ImageStim(win=self.window, image=fn, size=IMG_DISPLAY_SIZE)
 
         # Setting up images for the stimulus
-        #self.scene1 = list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, FOLDER1, PHOTOEXT1)))) # face
-        #self.scene2 = list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, FOLDER2, PHOTOEXT2)))) # house
-        self.scene1 = list(map(load_image, glob(os.path.join(FACE_HOUSE, image_path[0], '*_3.jpg')))) # face
-        self.scene2 = list(map(load_image, glob(os.path.join(FACE_HOUSE, image_path[1], '*_3.jpg')))) # face
+        self.scene1 = list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, image_path[0], '*_3.jpg')))) # face
+        self.scene2 = list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, image_path[1], '*_3.jpg')))) # face
         
     def load_stimulus(self):
         if STI_CHOICE == 0:
@@ -169,7 +167,7 @@ class Summer_School_VisualSSVEP(Experiment.BaseExperiment):
         grating_choice.pos = (mylist[flk_pos], STI_LOC_HEIGHT)
 
         # flicker frequency
-        flicker_frequency = update_freq
+        flicker_frequency = self.frame_rate / (update_freq * 2)
         
         # Push sample for marker
         marker_content = 1 #flk_frq + 1
