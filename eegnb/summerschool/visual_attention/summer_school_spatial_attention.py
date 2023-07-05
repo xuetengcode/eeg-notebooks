@@ -41,8 +41,8 @@ IMG_DISPLAY_SIZE=[10,10] #  width, height
 """ FOLDER1='houses'
 FOLDER2='faces'
  """
-PHOTOEXT1='*.jpg'
-PHOTOEXT2='*.jpg'
+PHOTOEXT1='*'
+PHOTOEXT2='*'
 
 T_ARROW=1
 Introduction_msg = """\nWelcome to the SSVEP experiment!\nStay still, focus on the stimuli, and try not to blink. \nThis block will run for %s seconds.\n
@@ -65,9 +65,9 @@ class Summer_School_Spatial_Attention(Experiment.BaseExperiment):
         load_image = lambda fn: visual.ImageStim(win=self.window, image=fn, size=IMG_DISPLAY_SIZE)
 
         # Setting up images for the stimulus
-        self.scene1 = list(map(load_image, glob(os.path.join(FACE_HOUSE, image_path[0], PHOTOEXT1)))) # face
+        self.scene1 = list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, image_path[0], PHOTOEXT1)))) # face
         
-        self.scene2 = list(map(load_image, glob(os.path.join(FACE_HOUSE, image_path[1], PHOTOEXT2)))) # house
+        self.scene2 = list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, image_path[1], PHOTOEXT2)))) # house
 
         # Return the list of images as a stimulus object
         return [self.scene1, self.scene2]
@@ -221,6 +221,9 @@ class Summer_School_Spatial_Attention(Experiment.BaseExperiment):
             stim_arrow.draw()
             self.window.flip()
 
+
+        flicker_frame = self.frame_rate / (flicker_frequency * 2)
+        flicker_frame_opposite = self.frame_rate / (flicker_frequency_opposite * 2)
         for _ in range(int(SOA * self.frame_rate) ): #range(int(self.stim_patterns[ind]["cycle"][0])):
             if current_frame % (2*flicker_frequency) < flicker_frequency:
                 #self.window.flip()
