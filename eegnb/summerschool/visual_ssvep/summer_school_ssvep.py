@@ -29,7 +29,7 @@ FIXATION_COLOR=[1, 0, 0]
 [1.0,0.6,0.6] is pink
 """
 image_path = ['faces', 'faces']#['houses', 'faces']
-update_freq = 20 #[7.5, 12]
+update_freq = 7.5 #[7.5, 12]
 x_offset = [0, 0]#[-10, 10]
 y_offset = [0]
 
@@ -69,11 +69,11 @@ class Summer_School_VisualSSVEP(Experiment.BaseExperiment):
             #self.grating = visual.GratingStim(win=self.window, mask="circle", size=80, sf=0.2)
             #self.grating = visual.GratingStim(win=self.window, mask="sqr", size=self.grating_size, sf=0.2, pos=(STI_LOC_WIDTH, STI_LOC_HEIGHT))
             #self.grating = visual.GratingStim(win=self.window, tex='sqr', size=self.grating_size, color=(-1, -1, -1), pos=(STI_LOC_WIDTH, STI_LOC_HEIGHT))
-            self.grating = visual.ImageStim(win=self.window, image=os.path.join(SUMMER_SCHOOL, 'samples', 'black.*'), size=self.grating_size)
+            self.grating = visual.ImageStim(win=self.window, image=os.path.join(SUMMER_SCHOOL, 'samples', 'Black.png'), size=self.grating_size)
 
             #self.grating_neg = visual.GratingStim(win=self.window, mask="circle", size=80, sf=0.2, phase=0.5)
             #self.grating_neg = visual.GratingStim(win=self.window, mask="sqr", size=self.grating_size, sf=0.2, phase=0.5, pos=(STI_LOC_WIDTH, STI_LOC_HEIGHT))
-            self.grating_neg = visual.ImageStim(win=self.window, image=os.path.join(SUMMER_SCHOOL, 'samples', 'black.*'), size=self.grating_size)
+            self.grating_neg = visual.ImageStim(win=self.window, image=os.path.join(SUMMER_SCHOOL, 'samples', 'Black.png'), size=self.grating_size)
 
             self.gratinglist = [self.grating, self.grating_neg]
         else:
