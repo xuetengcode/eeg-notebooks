@@ -12,8 +12,8 @@ from eegnb import generate_save_fn
 from eegnb.stimuli import SUMMER_SCHOOL
 from eegnb.summerschool import Experiment_modified as Experiment
 
-ITI=0.4
-SOA=2
+ITI=2
+SOA=5
 JITTER=0.2
 NTRIALS=2010
 STI_LOC_WIDTH=0
@@ -29,7 +29,7 @@ FIXATION_COLOR=[1, 0, 0]
 [1.0,0.6,0.6] is pink
 """
 image_path = ['faces', 'faces']#['houses', 'faces']
-update_freq = 7.5 #[7.5, 12]
+update_freq = [7.5] #[7.5, 12]
 x_offset = [0, 0]#[-10, 10]
 y_offset = [0]
 
@@ -170,8 +170,9 @@ class Summer_School_VisualSSVEP(Experiment.BaseExperiment):
             grating_choice = choice(self.gratinglist[flk_sti])
         grating_choice.pos = (mylist[flk_pos], STI_LOC_HEIGHT)
 
+        update_freq_choice = choice(update_freq)
         # flicker frequency
-        flicker_frequency = self.frame_rate / (update_freq * 2)
+        flicker_frequency = self.frame_rate / (update_freq_choice * 2)
         
         # Push sample for marker
         marker_content = 1 #flk_frq + 1
