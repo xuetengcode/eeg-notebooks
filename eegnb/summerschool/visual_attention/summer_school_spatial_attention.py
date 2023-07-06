@@ -225,10 +225,10 @@ class Summer_School_Spatial_Attention(Experiment.BaseExperiment):
         flicker_frame = self.frame_rate / (flicker_frequency * 2)
         flicker_frame_opposite = self.frame_rate / (flicker_frequency_opposite * 2)
         for _ in range(int(SOA * self.frame_rate) ): #range(int(self.stim_patterns[ind]["cycle"][0])):
-            if current_frame % (2*flicker_frequency) < flicker_frequency:
+            if current_frame % (2*flicker_frame) < flicker_frame:
                 #self.window.flip()
                 grating_choice.draw()
-            if current_frame % (2*flicker_frequency_opposite) < flicker_frequency_opposite:
+            if current_frame % (2*flicker_frame_opposite) < flicker_frame_opposite:
                 #self.window.flip()
                 grating_choice_opposite.draw()
             
