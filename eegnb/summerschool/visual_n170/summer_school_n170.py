@@ -21,10 +21,10 @@ from eegnb.stimuli import SUMMER_SCHOOL, FACE_HOUSE
 #from eegnb.experiments import Experiment_modified as Experiment
 from eegnb.summerschool import Experiment_modified as Experiment
 
-ITI=1
 SOA=2 # 0.3 image show time
+ITI=1 # wait time between images
 # mountains, faces, houses
-FOLDER1='landscape'
+FOLDER1='faces'
 PHOTOEXT1='*'
 FOLDER2='houses'
 PHOTOEXT2='*'
