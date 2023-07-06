@@ -12,8 +12,8 @@ from eegnb import generate_save_fn
 from eegnb.stimuli import SUMMER_SCHOOL
 from eegnb.summerschool import Experiment_modified as Experiment
 
-ITI=0.4
-SOA=2
+ITI=2
+SOA=5
 JITTER=0.2
 NTRIALS=2010
 STI_LOC_WIDTH=0
@@ -28,18 +28,14 @@ FIXATION_COLOR=[1, 0, 0]
 [1.0,-1,-1] is red
 [1.0,0.6,0.6] is pink
 """
-image_path = ['faces', 'faces']#['houses', 'faces']
-update_freq = 7.5 #[7.5, 12]
+image_path = ['black'] #['faces', 'faces']#['houses', 'faces']
+update_freq = [7.5] #[7.5, 12]
 x_offset = [0, 0]#[-10, 10]
 y_offset = [0]
 
 
-STI_CHOICE=0 # 0 for the original gratings, 1 for the pictures specified below
+STI_CHOICE=1 # 0 for the original gratings, 1 for the pictures specified below
 IMG_DISPLAY_SIZE=[40,20] #[10,10] #  width, height
-FOLDER1='houses'
-PHOTOEXT1='*.jpg'
-FOLDER2='mountains'
-PHOTOEXT2='*.png'
 
 T_ARROW=1
 Introduction_msg = """\nWelcome to the SSVEP experiment!\nStay still, focus on the stimuli, and try not to blink. \nThis block will run for %s seconds.\n
@@ -60,26 +56,28 @@ class Summer_School_VisualSSVEP(Experiment.BaseExperiment):
         load_image = lambda fn: visual.ImageStim(win=self.window, image=fn, size=IMG_DISPLAY_SIZE)
 
         # Setting up images for the stimulus
-        self.scene1 = list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, image_path[0], '*_3.jpg')))) # face
-        self.scene2 = list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, image_path[1], '*_3.jpg')))) # face
+        self.gratinglist = []
+        for img_path in image_path:
+            self.gratinglist.append(list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, image_path[0], '*')))))
+        #self.scene2 = list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, image_path[1], '*_3.jpg')))) # face
         
     def load_stimulus(self):
         if STI_CHOICE == 0:
             #grating_size = [40, 10]
             #self.grating = visual.GratingStim(win=self.window, mask="circle", size=80, sf=0.2)
             #self.grating = visual.GratingStim(win=self.window, mask="sqr", size=self.grating_size, sf=0.2, pos=(STI_LOC_WIDTH, STI_LOC_HEIGHT))
-            #self.grating = visual.GratingStim(win=self.window, tex='sqr', size=self.grating_size, color=(-1, -1, -1), pos=(STI_LOC_WIDTH, STI_LOC_HEIGHT))
-            self.grating = visual.ImageStim(win=self.window, image=os.path.join(SUMMER_SCHOOL, 'samples', 'Black.png'), size=self.grating_size)
+            self.grating = visual.GratingStim(win=self.window, tex='sqr', size=self.grating_size, color=(-1, -1, -1), pos=(STI_LOC_WIDTH, STI_LOC_HEIGHT))
+            #self.grating = visual.ImageStim(win=self.window, image=os.path.join(SUMMER_SCHOOL, 'samples', 'Black.png'), size=self.grating_size)
 
             #self.grating_neg = visual.GratingStim(win=self.window, mask="circle", size=80, sf=0.2, phase=0.5)
-            #self.grating_neg = visual.GratingStim(win=self.window, mask="sqr", size=self.grating_size, sf=0.2, phase=0.5, pos=(STI_LOC_WIDTH, STI_LOC_HEIGHT))
-            self.grating_neg = visual.ImageStim(win=self.window, image=os.path.join(SUMMER_SCHOOL, 'samples', 'Black.png'), size=self.grating_size)
+            self.grating_neg = visual.GratingStim(win=self.window, mask="sqr", size=self.grating_size, sf=0.2, phase=0.5, pos=(STI_LOC_WIDTH, STI_LOC_HEIGHT))
+            #self.grating_neg = visual.ImageStim(win=self.window, image=os.path.join(SUMMER_SCHOOL, 'samples', 'Black.png'), size=self.grating_size)
 
             self.gratinglist = [self.grating, self.grating_neg]
         else:
             # image
             self.load_stimulus_img()
-            self.gratinglist = [self.scene1, self.scene2]
+            #self.gratinglist = [self.scene1, self.scene2]
         
         fixation = visual.GratingStim(win=self.window, size=0.2, pos=[0, 0], sf=0.2, color=FIXATION_COLOR, autoDraw=True)
         
@@ -170,8 +168,9 @@ class Summer_School_VisualSSVEP(Experiment.BaseExperiment):
             grating_choice = choice(self.gratinglist[flk_sti])
         grating_choice.pos = (mylist[flk_pos], STI_LOC_HEIGHT)
 
+        update_freq_choice = choice(update_freq)
         # flicker frequency
-        flicker_frequency = self.frame_rate / (update_freq * 2)
+        flicker_frequency = self.frame_rate / (update_freq_choice * 2)
         
         # Push sample for marker
         marker_content = 1 #flk_frq + 1
