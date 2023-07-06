@@ -4,6 +4,23 @@
 cd eeg-notebook
 git pull
 ```
+The terminal should show either:
+![System Diagram](git_pull1.jpeg)
+or:
+![System Diagram](git_pull2.jpeg)
+If it shows an error message like this:
+![System Diagram](git_error.jpeg)
+Then reset the git by running:
+```
+git reset --hard
+git pull
+```
+Not it should show something similar to this:
+![System Diagram](git_reset.jpeg)
+
+
+
+
 
 ## Installation on personal computers
 
