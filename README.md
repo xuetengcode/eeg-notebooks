@@ -53,9 +53,9 @@ Then you select Experiments that start with "Summer_School", e.g., 6 - Summer_Sc
 Experiment codes are located at ~\eeg-notebooks\eegnb\summerschool\
 Go to [experiment name], the file name of each experiment is: summer_school_[experiment name].py, e.g., visual_n170 --> summer_school_n170.py
 ![System Diagram](VisualExperiments.jpg)
-In the experiment code, the duration of showing each image is controled by "SOA"; "ITI" controls the wait time between images. You can change, add or delete the image categories, e.g., "faces" --> "cats", the image folders are located at ~\eeg-notebooks\eegnb\stimuli\visual\summer_school
+In the experiment code, the duration of showing each image is controled by `SOA`; `ITI` controls the wait time between images. You can change, add or delete the image categories, e.g., `faces` --> `cats`, the image folders are located at `~\eeg-notebooks\eegnb\stimuli\visual\summer_school`. Stimulus categories are controlled by `images`.
 
-
+Image size is controlled by `IMG_DISPLAY_SIZE`; image location (when applicable) is controlled by `x_offset` and `y_offset`. Flickring frequency is controlled by `update_freq`.
 
 
 ## Collected Data

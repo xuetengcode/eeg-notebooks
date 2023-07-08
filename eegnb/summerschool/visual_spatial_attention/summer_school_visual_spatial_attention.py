@@ -4,7 +4,7 @@ from eegnb.summerschool import Experiment_modified as Experiment
 import os
 from time import time
 from glob import glob
-from random import choice
+import random
 
 import numpy as np
 from pandas import DataFrame
@@ -31,7 +31,7 @@ FIXATION_COLOR=[1, 0, 0]
 [1.0,-1,-1] is red
 [1.0,0.6,0.6] is pink
 """
-image_path = ['houses', 'faces']
+images = ['houses', 'faces']
 update_freq = [7.5, 12]
 x_offset = [-10, 10]
 y_offset = [0]
@@ -52,35 +52,43 @@ class Summer_School_Visual_Spatial_Attention(Experiment.BaseExperiment):
 
     def __init__(self, duration=120, eeg: EEG=None, save_fn=None, n_trials = NTRIALS, iti = ITI, soa = 0, jitter = JITTER):
         
-        exp_name = "Spatial Attention"
-        self.grating_size = [40, 10]
-        self.STI_LOC_WIDTH = x_offset
-        self.STI_LOC_HEIGHT = y_offset
-        
+        exp_name = "Visual Spatial Attention"
+        self.grating_size = IMG_DISPLAY_SIZE
+        self.STI_LOC_WIDTH = 0
+        self.STI_LOC_HEIGHT = 0
+
+        self.multi_sti = 0 
+        """
+            0: choose with repetition.
+            1: choose without repetition. number stimulus has to be >1
+        """
         super().__init__(exp_name, duration, eeg, save_fn, n_trials, iti, soa, jitter, default_color=BACKGROUND_COLOR)
 
     def load_stimulus_img(self):
-        
+
         # Loading Images from the folder
         load_image = lambda fn: visual.ImageStim(win=self.window, image=fn, size=IMG_DISPLAY_SIZE)
 
         # Setting up images for the stimulus
-        self.scene1 = list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, image_path[0], PHOTOEXT1)))) # face
-        
-        self.scene2 = list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, image_path[1], PHOTOEXT2)))) # house
-
-        # Return the list of images as a stimulus object
-        return [self.scene1, self.scene2]
+        self.gratinglist = []
+        for img in images:
+            self.gratinglist.append(list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, img, '*')))))
+        self.stimulus = images
 
     def load_stimulus(self):
-        self.load_stimulus_img()
-
-        #grating_size = [40, 10]
-        #self.grating = visual.GratingStim(win=self.window, mask="circle", size=80, sf=0.2)
-        self.grating = visual.GratingStim(win=self.window, mask="sqr", size=self.grating_size, sf=0.2, pos=(STI_LOC_WIDTH, STI_LOC_HEIGHT))
         
-        #self.grating_neg = visual.GratingStim(win=self.window, mask="circle", size=80, sf=0.2, phase=0.5)
-        self.grating_neg = visual.GratingStim(win=self.window, mask="sqr", size=self.grating_size, sf=0.2, phase=0.5, pos=(STI_LOC_WIDTH, STI_LOC_HEIGHT))
+        if STI_CHOICE == 0:
+            #grating_size = [40, 10]
+            #self.grating = visual.GratingStim(win=self.window, mask="circle", size=80, sf=0.2)
+            self.grating = visual.GratingStim(win=self.window, mask="sqr", size=self.grating_size, sf=0.2, pos=(STI_LOC_WIDTH, STI_LOC_HEIGHT))
+            
+            #self.grating_neg = visual.GratingStim(win=self.window, mask="circle", size=80, sf=0.2, phase=0.5)
+            self.grating_neg = visual.GratingStim(win=self.window, mask="sqr", size=self.grating_size, sf=0.2, phase=0.5, pos=(STI_LOC_WIDTH, STI_LOC_HEIGHT))
+
+            self.gratinglist = [self.grating, self.grating_neg]
+            self.stimulus = ['GratingStim']
+        else:
+            self.load_stimulus_img()
 
         fixation = visual.GratingStim(win=self.window, size=0.2, pos=[0, 0], sf=0.2, color=FIXATION_COLOR, autoDraw=True)
 
@@ -146,8 +154,7 @@ class Summer_School_Visual_Spatial_Attention(Experiment.BaseExperiment):
 
     def present_stimulus(self, idx, trial): # 2 flickr
         #self.window.color = BACKGROUND_COLOR
-
-        """
+        
         # Select stimulus frequency
         ind = self.trials["parameter"].iloc[idx]
         
@@ -159,51 +166,50 @@ class Summer_School_Visual_Spatial_Attention(Experiment.BaseExperiment):
             else:
                 marker = self.markernames[ind]
             self.eeg.push_sample(marker=marker, timestamp=timestamp)
-        """
-
+        
         # https://discourse.psychopy.org/t/i-need-advice-about-one-stimuli/29756/3
         # left \u2190 # right \u2192
-        arr_choice = choice([0,1])
+        arr_choice = random.choice([0,1])
         if arr_choice == 0: # left
             stim_arrow = self.arrow_left
         else: # right
             stim_arrow = self.arrow_right
 
         # select the position of 7.5 Hz flickr
-        flk_pos = choice([0,1])
-        flk_sti = choice([0,1])
-        flk_frq = flk_sti # choice([0,1])
-        
-        mylist = [STI_LOC_WIDTH,-STI_LOC_WIDTH]
-        if STI_CHOICE == 0:
-            gratinglist = [self.grating, self.grating_neg]
-        else:
-            # image
-            gratinglist = [choice(self.scene1), choice(self.scene2)]
+        # flk_pos = random.choice([0, 1]) # choose location
+        flk_frq = random.choice([0, 1]) # choose frequency
         
         # Present flickering stim
         # https://stackoverflow.com/questions/37469796/where-can-i-find-flickering-functions-for-stimuli-on-psychopy-and-how-do-i-use
-        #for _ in range(int(self.stim_patterns[ind]["n_cycles"])):
-        current_frame = 0
-        grating_choice = gratinglist[flk_sti]
-        grating_choice.pos = (mylist[flk_pos], STI_LOC_HEIGHT)
-
-        grating_choice_opposite = gratinglist[flk_sti-1]
-        grating_choice_opposite.pos = (mylist[flk_pos-1], STI_LOC_HEIGHT)
-
-        freq_list = update_freq
-        flicker_frequency = freq_list[flk_frq]
-        flicker_frequency_opposite = freq_list[flk_frq-1]
-
+        
+        # set flicker frequency
+        flicker_frequency = update_freq[flk_frq]
+        flicker_frequency_opposite = update_freq[flk_frq-1]
+        # set opposite grating
+        """ self.multi_sti
+            0: choose with repetition.
+            1: choose without repetition. number stimulus has to be >1
+        """
+        sti_candidate = [x for x in range(len(self.gratinglist))]
+        if self.multi_sti == 0:
+            flk_sti, flk_sti_opposite = random.choices(sti_candidate, k=2) # choose stimulus, allow any number of stimulus
+        else:
+            flk_sti, flk_sti_opposite = random.sample(sti_candidate, 2)
+        # set grating
+        grating_choice = self.gratinglist[flk_sti]
+        grating_choice_opposite = self.gratinglist[flk_sti_opposite]
+        
+        grating_choice.pos = (x_offset[0], y_offset[0])
+        grating_choice_opposite.pos = (x_offset[1], y_offset[-1])
+        
         # Push sample for marker
         #marker_content = 'flicker{}_freq{}_arrow{}'.format(flk_sti, flicker_frequency, arr_choice)
-        marker_content = flk_frq + 1
-        stim_list = [1,2]
-        print('idx: {}'.format(idx))
+        marker_content = 1 # flk_frq + 1
+        #print('idx: {}'.format(idx))
 
         # prepare json
         self.res_output[idx] = {
-            'categories': [stim_list[flk_sti], stim_list[flk_sti-1]],
+            'categories': [images[sti_candidate[flk_sti]], images[sti_candidate[flk_sti_opposite]]],
             'frequency': [flicker_frequency, flicker_frequency_opposite],
             'attention': [0, 1] if arr_choice == 0 else [1,0]
         }
@@ -221,9 +227,9 @@ class Summer_School_Visual_Spatial_Attention(Experiment.BaseExperiment):
             stim_arrow.draw()
             self.window.flip()
 
-
         flicker_frame = self.frame_rate / (flicker_frequency * 2)
         flicker_frame_opposite = self.frame_rate / (flicker_frequency_opposite * 2)
+        current_frame = 0
         for _ in range(int(SOA * self.frame_rate) ): #range(int(self.stim_patterns[ind]["cycle"][0])):
             if current_frame % (2*flicker_frame) < flicker_frame:
                 #self.window.flip()
@@ -235,12 +241,7 @@ class Summer_School_Visual_Spatial_Attention(Experiment.BaseExperiment):
             self.window.flip()
             current_frame += 1  # increment by 1.
         #grating_choice.setAutoDraw(False)
-        self.random_record = [arr_choice, flk_pos, flk_sti]
+        self.random_record = [arr_choice, flk_sti]
 
         return self.random_record
-    
-
-        
-    
-    
     
