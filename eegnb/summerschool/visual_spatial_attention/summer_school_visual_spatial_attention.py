@@ -57,7 +57,7 @@ class Summer_School_Visual_Spatial_Attention(Experiment.BaseExperiment):
         self.STI_LOC_WIDTH = 0
         self.STI_LOC_HEIGHT = 0
 
-        self.multi_sti = 0 
+        self.multi_sti = 1 
         """
             0: choose with repetition.
             1: choose without repetition. number stimulus has to be >1
@@ -196,8 +196,8 @@ class Summer_School_Visual_Spatial_Attention(Experiment.BaseExperiment):
         else:
             flk_sti, flk_sti_opposite = random.sample(sti_candidate, 2)
         # set grating
-        grating_choice = self.gratinglist[flk_sti]
-        grating_choice_opposite = self.gratinglist[flk_sti_opposite]
+        grating_choice = random.choice(self.gratinglist[flk_sti])
+        grating_choice_opposite = random.choice(self.gratinglist[flk_sti_opposite])
         
         grating_choice.pos = (x_offset[0], y_offset[0])
         grating_choice_opposite.pos = (x_offset[1], y_offset[-1])
