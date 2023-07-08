@@ -63,7 +63,9 @@ class Summer_School_VisualN170(Experiment.BaseExperiment):
         image = choice(self.scene1 if label == 1 else self.scene2)
         # Draw the image
         image.draw()
-
+        self.res_output[idx] = {
+            'categories': FOLDER1 if label == 1 else FOLDER2,
+        }
         # Pushing the sample to the EEG
         if self.eeg:
             timestamp = time()
