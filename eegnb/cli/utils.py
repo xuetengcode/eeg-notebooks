@@ -42,9 +42,9 @@ experiments = {
     "Summer_School_N170": Summer_School_VisualN170(),
     "Summer_School_Spatial_Attention": Summer_School_Visual_Spatial_Attention(),
     "Summer_School_SSVEP": Summer_School_VisualSSVEP(),
-    "Summer_School_visual-cue": Summer_School_cueing,
-    "Summer_School_codeprose": Summer_School_codeprose,
-    "Summer_School_auditory-oddball": Summer_School_AuditoryOddball(),
+    #"Summer_School_visual-cue": Summer_School_cueing,
+    #"Summer_School_codeprose": Summer_School_codeprose,
+    #"Summer_School_auditory-oddball": Summer_School_AuditoryOddball(),
     #"Summer School GoNoGo": Summer_School_go_nogo,
 }
 
