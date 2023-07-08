@@ -51,15 +51,21 @@ Then you select Experiments that start with "Summer_School", e.g., 6 - Summer_Sc
 
 ## Modify the experiment
 Experiment codes are located at ~\eeg-notebooks\eegnb\summerschool\
-The file name of each experiment is: summer_school_[experiment name].py, e.g., 6 - summer_school_n170.py
+Go to [experiment name], the file name of each experiment is: summer_school_[experiment name].py, e.g., visual_n170 --> summer_school_n170.py
+![System Diagram](VisualExperiments.jpg)
+In the experiment code, the duration of showing each image is controled by "SOA"; "ITI" controls the wait time between images. You can change, add or delete the image categories, e.g., "faces" --> "cats", the image folders are located at ~\eeg-notebooks\eegnb\stimuli\visual\summer_school
 
-The image folders are located at ~\eeg-notebooks\eegnb\stimuli\visual\summer_school
-In the experiment code, you can change the image categories, e.g., "faces" --> "cats"
+
+
 
 ## Collected Data
 
 All data are saved at `~/.eegnb`. Click the top left corner "Activities" --> "Files" --> on the top tool bar, click the button with 3 short lines (Open Menu) --> select "Show Hidden Files".
-Alternatively you can run the bash script, `link_data.sh`, at eeg-notebook folder. It will create a symbolic link from the hidden data folderto `~/eegnb`
+Alternatively you can run the bash script `link_data.sh` in eeg-notebook folder:
+```
+bash link_data.sh
+```
+It will create a symbolic link from the hidden data folder to `~/eegnb`
 
 ## Visualize the data
 Open a new terminal window:
