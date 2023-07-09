@@ -36,15 +36,14 @@ update_freq = [7.5, 12]
 x_offset = [-10, 10]
 y_offset = [0]
 
-STI_CHOICE=1 # 0 for the original gratings, 1 for the pictures specified below
+STI_CHOICE=1 # 0 for the original images, 1 for the pictures specified below
 IMG_DISPLAY_SIZE=[10,10] #  width, height
-""" FOLDER1='houses'
-FOLDER2='faces'
- """
-PHOTOEXT1='*'
-PHOTOEXT2='*'
-
-T_ARROW=1
+T_ARROW=1 # 1 second
+choice_of_second_img = 1
+"""
+    0: second image can be repetition of the first one
+    1: second image exclude first one. images has to be >1
+"""
 Introduction_msg = """\nWelcome to the SSVEP experiment!\nStay still, focus on the stimuli, and try not to blink. \nThis block will run for %s seconds.\n
         Press spacebar to continue and c to terminate. \n"""
 
@@ -53,15 +52,12 @@ class Summer_School_Visual_Spatial_Attention(Experiment.BaseExperiment):
     def __init__(self, duration=120, eeg: EEG=None, save_fn=None, n_trials = NTRIALS, iti = ITI, soa = 0, jitter = JITTER):
         
         exp_name = "Visual Spatial Attention"
-        self.grating_size = IMG_DISPLAY_SIZE
+        self.image_size = IMG_DISPLAY_SIZE
         self.STI_LOC_WIDTH = 0
         self.STI_LOC_HEIGHT = 0
 
-        self.multi_sti = 1 
-        """
-            0: choose with repetition.
-            1: choose without repetition. number stimulus has to be >1
-        """
+        self.multi_sti = choice_of_second_img 
+        
         super().__init__(exp_name, duration, eeg, save_fn, n_trials, iti, soa, jitter, default_color=BACKGROUND_COLOR)
 
     def load_stimulus_img(self):
@@ -70,22 +66,22 @@ class Summer_School_Visual_Spatial_Attention(Experiment.BaseExperiment):
         load_image = lambda fn: visual.ImageStim(win=self.window, image=fn, size=IMG_DISPLAY_SIZE)
 
         # Setting up images for the stimulus
-        self.gratinglist = []
+        self.imagelist = []
         for img in images:
-            self.gratinglist.append(list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, img, '*')))))
+            self.imagelist.append(list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, img, '*')))))
         self.stimulus = images
 
     def load_stimulus(self):
         
         if STI_CHOICE == 0:
-            #grating_size = [40, 10]
-            #self.grating = visual.GratingStim(win=self.window, mask="circle", size=80, sf=0.2)
-            self.grating = visual.GratingStim(win=self.window, mask="sqr", size=self.grating_size, sf=0.2, pos=(STI_LOC_WIDTH, STI_LOC_HEIGHT))
+            #image_size = [40, 10]
+            #self.image = visual.GratingStim(win=self.window, mask="circle", size=80, sf=0.2)
+            self.image = visual.GratingStim(win=self.window, mask="sqr", size=self.image_size, sf=0.2, pos=(STI_LOC_WIDTH, STI_LOC_HEIGHT))
             
-            #self.grating_neg = visual.GratingStim(win=self.window, mask="circle", size=80, sf=0.2, phase=0.5)
-            self.grating_neg = visual.GratingStim(win=self.window, mask="sqr", size=self.grating_size, sf=0.2, phase=0.5, pos=(STI_LOC_WIDTH, STI_LOC_HEIGHT))
+            #self.image_neg = visual.GratingStim(win=self.window, mask="circle", size=80, sf=0.2, phase=0.5)
+            self.image_neg = visual.GratingStim(win=self.window, mask="sqr", size=self.image_size, sf=0.2, phase=0.5, pos=(STI_LOC_WIDTH, STI_LOC_HEIGHT))
 
-            self.gratinglist = [self.grating, self.grating_neg]
+            self.imagelist = [self.image, self.image_neg]
             self.stimulus = ['GratingStim']
         else:
             self.load_stimulus_img()
@@ -185,22 +181,18 @@ class Summer_School_Visual_Spatial_Attention(Experiment.BaseExperiment):
         # set flicker frequency
         flicker_frequency = update_freq[flk_frq]
         flicker_frequency_opposite = update_freq[flk_frq-1]
-        # set opposite grating
-        """ self.multi_sti
-            0: choose with repetition.
-            1: choose without repetition. number stimulus has to be >1
-        """
-        sti_candidate = [x for x in range(len(self.gratinglist))]
+        
+        sti_candidate = [x for x in range(len(self.imagelist))]
         if self.multi_sti == 0:
             flk_sti, flk_sti_opposite = random.choices(sti_candidate, k=2) # choose stimulus, allow any number of stimulus
         else:
             flk_sti, flk_sti_opposite = random.sample(sti_candidate, 2)
-        # set grating
-        grating_choice = random.choice(self.gratinglist[flk_sti])
-        grating_choice_opposite = random.choice(self.gratinglist[flk_sti_opposite])
+        # set image
+        image_choice = random.choice(self.imagelist[flk_sti])
+        image_choice_opposite = random.choice(self.imagelist[flk_sti_opposite])
         
-        grating_choice.pos = (x_offset[0], y_offset[0])
-        grating_choice_opposite.pos = (x_offset[1], y_offset[-1])
+        image_choice.pos = (x_offset[0], y_offset[0])
+        image_choice_opposite.pos = (x_offset[1], y_offset[-1])
         
         # Push sample for marker
         #marker_content = 'flicker{}_freq{}_arrow{}'.format(flk_sti, flicker_frequency, arr_choice)
@@ -222,7 +214,7 @@ class Summer_School_Visual_Spatial_Attention(Experiment.BaseExperiment):
                 marker = marker_content
             self.eeg.push_sample(marker=marker, timestamp=timestamp)
 
-        grating_choice.setAutoDraw(False)
+        image_choice.setAutoDraw(False)
         for _ in range(int(T_ARROW * self.frame_rate) ):
             stim_arrow.draw()
             self.window.flip()
@@ -232,15 +224,13 @@ class Summer_School_Visual_Spatial_Attention(Experiment.BaseExperiment):
         current_frame = 0
         for _ in range(int(SOA * self.frame_rate) ): #range(int(self.stim_patterns[ind]["cycle"][0])):
             if current_frame % (2*flicker_frame) < flicker_frame:
-                #self.window.flip()
-                grating_choice.draw()
+                image_choice.draw()
             if current_frame % (2*flicker_frame_opposite) < flicker_frame_opposite:
-                #self.window.flip()
-                grating_choice_opposite.draw()
+                image_choice_opposite.draw()
             
             self.window.flip()
             current_frame += 1  # increment by 1.
-        #grating_choice.setAutoDraw(False)
+        
         self.random_record = [arr_choice, flk_sti]
 
         return self.random_record

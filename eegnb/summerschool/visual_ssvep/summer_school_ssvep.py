@@ -29,7 +29,7 @@ FIXATION_COLOR=[1, 0, 0]
 images = ['black', 'faces'] #['faces', 'faces']#['houses', 'faces']
 update_freq = [7.5] #[7.5, 12]
 
-STI_CHOICE=1 # 0 for the original gratings, 1 for the pictures specified below
+STI_CHOICE=1 # 0 for the original images, 1 for the pictures specified below
 IMG_DISPLAY_SIZE=[40,20] #[10,10] #  width, height
 
 T_ARROW=1
@@ -46,7 +46,7 @@ class Summer_School_VisualSSVEP(Experiment.BaseExperiment):
     def __init__(self, duration=120, eeg: EEG=None, save_fn=None, n_trials = NTRIALS, iti = ITI, soa = 0, jitter = JITTER):
         
         exp_name = "Visual SSVEP"
-        self.grating_size = IMG_DISPLAY_SIZE
+        self.image_size = IMG_DISPLAY_SIZE
         
         self.x_offset = [0, 0]
         self.STI_LOC_WIDTH = 0
@@ -60,22 +60,22 @@ class Summer_School_VisualSSVEP(Experiment.BaseExperiment):
         load_image = lambda fn: visual.ImageStim(win=self.window, image=fn, size=IMG_DISPLAY_SIZE)
 
         # Setting up images for the stimulus
-        self.gratinglist = []
+        self.imagelist = []
         for img in images:
-            self.gratinglist.append(list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, img, '*')))))
+            self.imagelist.append(list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, img, '*')))))
         self.stimulus = images
 
     def load_stimulus(self):
 
         if STI_CHOICE == 0:
-            #self.grating = visual.GratingStim(win=self.window, mask="sqr", size=self.grating_size, sf=0.2, pos=(STI_LOC_WIDTH, STI_LOC_HEIGHT))
-            self.grating = visual.GratingStim(win=self.window, tex='sqr', size=self.grating_size, color=(-1, -1, -1), pos=(self.STI_LOC_WIDTH, self.STI_LOC_HEIGHT))
-            #self.grating = visual.ImageStim(win=self.window, image=os.path.join(SUMMER_SCHOOL, 'samples', 'Black.png'), size=self.grating_size)
+            #self.image = visual.GratingStim(win=self.window, mask="sqr", size=self.image_size, sf=0.2, pos=(STI_LOC_WIDTH, STI_LOC_HEIGHT))
+            self.image = visual.GratingStim(win=self.window, tex='sqr', size=self.image_size, color=(-1, -1, -1), pos=(self.STI_LOC_WIDTH, self.STI_LOC_HEIGHT))
+            #self.image = visual.GratingStim(win=self.window, image=os.path.join(SUMMER_SCHOOL, 'samples', 'Black.png'), size=self.image_size)
 
-            #self.grating_neg = visual.GratingStim(win=self.window, mask="circle", size=80, sf=0.2, phase=0.5)
-            self.grating_neg = visual.GratingStim(win=self.window, mask="sqr", size=self.grating_size, sf=0.2, phase=0.5, pos=(self.STI_LOC_WIDTH, self.STI_LOC_HEIGHT))
+            #self.image_neg = visual.GratingStim(win=self.window, mask="circle", size=80, sf=0.2, phase=0.5)
+            self.image_neg = visual.GratingStim(win=self.window, mask="sqr", size=self.image_size, sf=0.2, phase=0.5, pos=(self.STI_LOC_WIDTH, self.STI_LOC_HEIGHT))
 
-            self.gratinglist = [self.grating, self.grating_neg]
+            self.imagelist = [self.image, self.image_neg]
             self.stimulus = ['GratingStim']
         else:
             # image
@@ -155,8 +155,8 @@ class Summer_School_VisualSSVEP(Experiment.BaseExperiment):
 
         
         # select the position of 7.5 Hz flickr
-        flk_pos = choice([x for x in range(len(self.gratinglist))])
-        flk_sti = choice([x for x in range(len(self.gratinglist))])
+        flk_pos = choice([x for x in range(len(self.imagelist))])
+        flk_sti = choice([x for x in range(len(self.imagelist))])
 
         
         #mylist = x_offset # [STI_LOC_WIDTH,-STI_LOC_WIDTH]
@@ -165,11 +165,11 @@ class Summer_School_VisualSSVEP(Experiment.BaseExperiment):
         # https://stackoverflow.com/questions/37469796/where-can-i-find-flickering-functions-for-stimuli-on-psychopy-and-how-do-i-use
         current_frame = 0
         if STI_CHOICE == 0:
-            print('{}, {}'.format(len(self.gratinglist), flk_sti))
-            grating_choice = self.gratinglist[flk_sti]
+            print('{}, {}'.format(len(self.imagelist), flk_sti))
+            image_choice = self.imagelist[flk_sti]
         else:
-            grating_choice = choice(self.gratinglist[flk_sti])
-        #grating_choice.pos = (self.x_offset[flk_pos], self.STI_LOC_HEIGHT)
+            image_choice = choice(self.imagelist[flk_sti])
+        #image_choice.pos = (self.x_offset[flk_pos], self.STI_LOC_HEIGHT)
 
         update_freq_choice = choice(update_freq)
         # flicker frequency: translate Hz into # of refresh frames
@@ -194,11 +194,11 @@ class Summer_School_VisualSSVEP(Experiment.BaseExperiment):
                 marker = marker_content
             self.eeg.push_sample(marker=marker, timestamp=timestamp)
 
-        grating_choice.setAutoDraw(False)
+        image_choice.setAutoDraw(False)
         
         for _ in range(int(SOA * self.frame_rate) ): #range(int(self.stim_patterns[ind]["cycle"][0])):
             if current_frame % (2*flicker_frequency) < flicker_frequency:
-                grating_choice.draw()
+                image_choice.draw()
             
             self.window.flip()
             current_frame += 1
