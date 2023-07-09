@@ -1,4 +1,5 @@
 # Welcome to the modified eeg-notebooks
+https://github.com/xuetengcode/eeg-notebooks
 ## Upon start
 Open the terminal app and type:
 ```
@@ -47,17 +48,17 @@ Unicorn - press and hold the power button until the light starts to blink, same 
 
 Now you select the device in the terminal:
 
-Muse 2 - 6
+Muse 2 - `6`
 
-Muse s - 8
+Muse s - `8`
 
-Unicorn - 13
+Unicorn - `13`
 
-Then you select Experiments that start with "Summer_School", e.g., 6 - Summer_School_N170
+Then you select Experiments that start with "Summer_School", e.g., `6 - Summer_School_N170`
 
 ## Modify the experiment
-Experiment codes are located at ~\eeg-notebooks\eegnb\summerschool\
-Go to [experiment name], the file name of each experiment is: summer_school_[experiment name].py, e.g., visual_n170 --> summer_school_n170.py
+Experiment codes are located at `~\eeg-notebooks\eegnb\summerschool\`
+Go to summer_school_[experiment name], the file name of each experiment is: summer_school_[experiment name].py, e.g., `summer_school_visual_n170` --> `summer_school_n170.py`
 ![System Diagram](VisualExperiments.jpg)
 In the experiment code, you can change the parameters to make your own experiment:
 
@@ -78,7 +79,7 @@ In the experiment code, you can change the parameters to make your own experimen
 
 ## Collected Data
 
-All data are saved at `~/.eegnb`. Click the top left corner "Activities" --> "Files" --> on the top tool bar, click the button with 3 short lines (Open Menu) --> select "Show Hidden Files".
+All data are saved at `~/.eegnb`. Click the top left corner `Activities` --> `Files` --> on the top tool bar, click the button with 3 short lines (Open Menu) --> select `Show Hidden Files`.
 
 Alternatively you can run the bash script `link_data.sh` in eeg-notebook folder:
 ```
@@ -92,6 +93,6 @@ Open a new terminal window:
 cd eeg-botebooks\eegnb\summerschool
 jupyter notebook
 ```
-Go to summer_school_[experiment name], then summer_school_[experiment name]_viz.ipnb. E.g., summer_school_visual_n170 then summer_school_visual_n170_viz.ipnb
+Go to summer_school_[experiment name], then summer_school_[experiment name]_viz.ipnb. E.g., `summer_school_visual_n170` --> `summer_school_visual_n170_viz.ipnb`
 
-Replace the subject ID # and session #, then on the menu select "Cell"- "Run All"
+Replace the subject ID # and session #, then on the menu select `Cell` --> `Run All`
