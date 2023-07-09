@@ -30,7 +30,7 @@ images = ['black', 'faces'] #['faces', 'faces']#['houses', 'faces']
 update_freq = [7.5] #[7.5, 12]
 
 STI_CHOICE=1 # 0 for the original images, 1 for the pictures specified below
-IMG_DISPLAY_SIZE=[40,20] #[10,10] #  width, height
+IMG_DISPLAY_SIZE=[20,20] #[10,10] #  width, height
 
 T_ARROW=1
 Introduction_msg = """\nWelcome to the SSVEP experiment!\nStay still, focus on the stimuli, and try not to blink. \nThis block will run for %s seconds.\n
