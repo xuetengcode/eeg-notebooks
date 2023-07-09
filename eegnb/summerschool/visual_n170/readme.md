@@ -1,1 +1,0 @@
-![System Diagram](Slide3.jpg)
