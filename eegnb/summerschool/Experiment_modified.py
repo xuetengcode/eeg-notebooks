@@ -164,9 +164,9 @@ class BaseExperiment:
             event.clearEvents()
         
         # save json
-        with open(self.save_fn + 'events.json', 'w') as fp:
+        with open(self.save_fn.split('.')[0] + 'events.json', 'w') as fp:
             json.dump(self.res_output_events, fp)
-        with open(self.save_fn + 'dict.json', 'w') as fp:
+        with open(self.save_fn.split('.')[0] + 'dict.json', 'w') as fp:
             json.dump(self.res_output_dict, fp)
 
         # Closing the EEG stream 
