@@ -25,9 +25,9 @@ SOA=2 # 0.3 image show time
 ITI=1 # wait time between images
 # mountains, faces, houses
 FOLDER1='faces'
-PHOTOEXT1='*'
+
 FOLDER2='houses'
-PHOTOEXT2='*'
+
 BACKGROUND_COLOR=[1,0.6,0.6]
 JITTER=0.2
 NTRIALS=2010
@@ -48,9 +48,9 @@ class Summer_School_VisualN170(Experiment.BaseExperiment):
         load_image = lambda fn: visual.ImageStim(win=self.window, image=fn)
 
         # Setting up images for the stimulus
-        self.scene1 = list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, FOLDER1, PHOTOEXT1)))) # face
+        self.scene1 = list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, FOLDER1, '*')))) # face
         
-        self.scene2 = list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, FOLDER2, PHOTOEXT2)))) # house
+        self.scene2 = list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, FOLDER2, '*')))) # house
 
         # Return the list of images as a stimulus object
         return [self.scene1, self.scene2]

@@ -27,9 +27,9 @@ FIXATION_COLOR=[1, 0, 0]
 [1.0,0.6,0.6] is pink
 """
 images = ['black', 'faces'] #['faces', 'faces']#['houses', 'faces']
-update_freq = [7.5] #[7.5, 12]
+update_freq = [12] #[7.5, 12]
 
-STI_CHOICE=1 # 0 for the original images, 1 for the pictures specified below
+STI_CHOICE=1 # 0 for grating images, 1 for the pictures specified above
 IMG_DISPLAY_SIZE=[20,20] #[10,10] #  width, height
 
 T_ARROW=1
@@ -68,15 +68,17 @@ class Summer_School_VisualSSVEP(Experiment.BaseExperiment):
     def load_stimulus(self):
 
         if STI_CHOICE == 0:
-            #self.image = visual.GratingStim(win=self.window, mask="sqr", size=self.image_size, sf=0.2, pos=(STI_LOC_WIDTH, STI_LOC_HEIGHT))
-            self.image = visual.GratingStim(win=self.window, tex='sqr', size=self.image_size, color=(-1, -1, -1), pos=(self.STI_LOC_WIDTH, self.STI_LOC_HEIGHT))
-            #self.image = visual.GratingStim(win=self.window, image=os.path.join(SUMMER_SCHOOL, 'samples', 'Black.png'), size=self.image_size)
+            #self.grating = visual.GratingStim(win=self.window, mask="circle", size=80, sf=0.2)
+            #self.grating_neg = visual.GratingStim(win=self.window, mask="circle", size=80, sf=0.2, phase=0.5)
+
+            #self.image = visual.GratingStim(win=self.window, tex='circle', size=self.image_size, sf=0.2, color=(-1, -1, -1), pos=(self.STI_LOC_WIDTH, self.STI_LOC_HEIGHT))
+            self.image = visual.GratingStim(win=self.window, tex='sqr', size=self.image_size, sf=0.2, pos=(self.STI_LOC_WIDTH, self.STI_LOC_HEIGHT))
 
             #self.image_neg = visual.GratingStim(win=self.window, mask="circle", size=80, sf=0.2, phase=0.5)
-            self.image_neg = visual.GratingStim(win=self.window, mask="sqr", size=self.image_size, sf=0.2, phase=0.5, pos=(self.STI_LOC_WIDTH, self.STI_LOC_HEIGHT))
+            self.image_neg = visual.GratingStim(win=self.window, tex='sqr', size=self.image_size, sf=0.2, phase=0.5, pos=(self.STI_LOC_WIDTH, self.STI_LOC_HEIGHT))
 
             self.imagelist = [self.image, self.image_neg]
-            self.stimulus = ['GratingStim']
+            self.stimulus = ['GratingStim', 'GratingStim_Neg']
         else:
             # image
             self.load_stimulus_img()
