@@ -200,10 +200,16 @@ class Summer_School_Visual_Spatial_Attention(Experiment.BaseExperiment):
         #print('idx: {}'.format(idx))
 
         # prepare json
-        self.res_output[idx] = {
+        self.res_output_events[idx] = {
             'categories': [images[sti_candidate[flk_sti]], images[sti_candidate[flk_sti_opposite]]],
             'frequency': [flicker_frequency, flicker_frequency_opposite],
             'attention': [0, 1] if arr_choice == 0 else [1,0]
+        }
+        self.res_output_dict = {
+            'categories': {idx+1: self.stimulus[idx] for idx in range(len(self.stimulus))},
+            'frequency': update_freq,
+            'ITI': ITI,
+            'SOA': SOA
         }
         
         if self.eeg:

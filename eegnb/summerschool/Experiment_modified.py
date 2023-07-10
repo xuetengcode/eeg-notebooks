@@ -139,7 +139,8 @@ class BaseExperiment:
 
         start = time()
         
-        self.res_output = {}
+        self.res_output_events = {}
+        self.res_output_dict = {}
         # Iterate through the events
         for ii, trial in self.trials.iterrows():
             # Intertrial interval
@@ -163,8 +164,10 @@ class BaseExperiment:
             event.clearEvents()
         
         # save json
-        with open(self.save_fn + '.json', 'w') as fp:
-            json.dump(self.res_output, fp)
+        with open(self.save_fn + 'events.json', 'w') as fp:
+            json.dump(self.res_output_events, fp)
+        with open(self.save_fn + 'dict.json', 'w') as fp:
+            json.dump(self.res_output_dict, fp)
 
         # Closing the EEG stream 
         if self.eeg:

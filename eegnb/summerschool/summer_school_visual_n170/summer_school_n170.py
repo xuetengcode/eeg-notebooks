@@ -65,8 +65,15 @@ class Summer_School_VisualN170(Experiment.BaseExperiment):
         image = choice(self.scene1 if label == 1 else self.scene2)
         # Draw the image
         image.draw()
-        self.res_output[idx] = {
+        self.res_output_events[idx] = {
             'categories': FOLDER1 if label == 1 else FOLDER2,
+        }
+        self.res_output_dict = {
+            'categories': {
+                1: FOLDER1, 
+                2: FOLDER2},
+            'ITI': ITI,
+            'SOA': SOA
         }
         # Pushing the sample to the EEG
         if self.eeg:

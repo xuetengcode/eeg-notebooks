@@ -183,9 +183,15 @@ class Summer_School_VisualSSVEP(Experiment.BaseExperiment):
         #print('idx: {}'.format(idx))
 
         # prepare json
-        self.res_output[idx] = {
+        self.res_output_events[idx] = {
             'categories': self.stimulus[flk_sti],
             'frequency': [update_freq_choice]
+        }
+        self.res_output_dict = {
+            'categories': {idx+1: self.stimulus[idx] for idx in range(len(self.stimulus))},
+            'frequency': update_freq,
+            'ITI': ITI,
+            'SOA': SOA
         }
         
         if self.eeg:
