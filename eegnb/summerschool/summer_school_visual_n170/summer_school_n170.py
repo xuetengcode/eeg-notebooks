@@ -31,6 +31,8 @@ FOLDER2='houses'
 BACKGROUND_COLOR=[1,0.6,0.6]
 JITTER=0.2
 NTRIALS=2010
+IMG_DISPLAY_SIZE=[20,20] #[10,10] #  width, height
+
 
 class Summer_School_VisualN170(Experiment.BaseExperiment):
 
@@ -45,7 +47,7 @@ class Summer_School_VisualN170(Experiment.BaseExperiment):
     def load_stimulus(self):
         
         # Loading Images from the folder
-        load_image = lambda fn: visual.ImageStim(win=self.window, image=fn)
+        load_image = lambda fn: visual.ImageStim(win=self.window, image=fn, size=IMG_DISPLAY_SIZE)
 
         # Setting up images for the stimulus
         self.scene1 = list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, FOLDER1, '*')))) # face
