@@ -196,7 +196,7 @@ class Summer_School_Visual_Spatial_Attention(Experiment.BaseExperiment):
         
         # Push sample for marker
         #marker_content = 'flicker{}_freq{}_arrow{}'.format(flk_sti, flicker_frequency, arr_choice)
-        marker_content = 1 # flk_frq + 1
+        marker_content = flk_sti + 1 # flk_frq + 1
         #print('idx: {}'.format(idx))
 
         # prepare json

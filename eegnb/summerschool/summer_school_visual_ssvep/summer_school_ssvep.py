@@ -178,7 +178,7 @@ class Summer_School_VisualSSVEP(Experiment.BaseExperiment):
         flicker_frequency = self.frame_rate / (update_freq_choice * 2)
         
         # Push sample for marker
-        marker_content = 1 #flk_frq + 1
+        marker_content = flk_sti + 1 #flk_frq + 1
         stim_list = [1,2]
         #print('idx: {}'.format(idx))
 
