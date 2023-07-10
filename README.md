@@ -4,6 +4,7 @@ https://github.com/xuetengcode/eeg-notebooks
 ### Additional Images
 https://drive.google.com/drive/folders/1AH47OELX5T4rQJRl1mi9CsPDGDnLMFIu?usp=sharing
 ## Upon start
+### On University computers
 Open the terminal app and type:
 ```
 cd eeg-notebook
@@ -24,7 +25,7 @@ Now it shows something similar to the selected text (white background) and you c
 ![System Diagram](git_reset.jpeg)
 
 
-If you are on your personal computer:
+### On your personal computer:
 
 ```
 conda create -y -n eeg_experiments python=3.7 wxpython
@@ -57,7 +58,7 @@ Muse s - `8`
 
 Unicorn - `13`
 
-Then you select Experiments that start with "Summer_School", e.g., `6 - Summer_School_N170`
+Then you select Experiments that start with "Summer_School", e.g., `6` for `6 - Summer_School_N170`.
 
 ## Modify the experiment
 Experiment codes are located at `~\eeg-notebooks\eegnb\summerschool\`
