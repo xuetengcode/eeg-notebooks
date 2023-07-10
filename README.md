@@ -1,5 +1,8 @@
 # Welcome to the modified eeg-notebooks
+### Git Repository
 https://github.com/xuetengcode/eeg-notebooks
+### Additional Images
+https://drive.google.com/drive/folders/1AH47OELX5T4rQJRl1mi9CsPDGDnLMFIu?usp=sharing
 ## Upon start
 Open the terminal app and type:
 ```
