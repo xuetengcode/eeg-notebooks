@@ -68,13 +68,23 @@ In the experiment code, you can change the parameters to make your own experimen
 
 `images` - stimulus categories. You can change or delete the image categories, e.g., `faces` --> `cats`. Image folders are located at `~\eeg-notebooks\eegnb\stimuli\visual\summer_school`, you can add new categories by adding new folders of images at this location;
 
+`NTRIALS` - leave it as 2010;
+
+`BACKGROUND_COLOR` - background color;
+
+`FIXATION_COLOR` - fixation (dot in the middle) color;
+
 `IMG_DISPLAY_SIZE` - image size on the screen;
+
+`T_ARROW` (when applicable) - presentation time of the arrow;
 
 `update_freq` (when applicable) - flickering frequency;
 
 `x_offset` (when applicable) - image location, horizontal distance away from center of screen;
 
 `y_offset` (when applicable) - image location, vertical distance away from center of screen.
+
+
 
 
 ## Collected Data

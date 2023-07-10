@@ -32,7 +32,7 @@ FIXATION_COLOR=[1, 0, 0]
 [1.0,0.6,0.6] is pink
 """
 images = ['houses', 'faces']
-update_freq = [7.5, 12]
+update_freq = [12, 15]
 x_offset = [-10, 10]
 y_offset = [0]
 
