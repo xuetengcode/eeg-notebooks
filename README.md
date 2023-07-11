@@ -100,3 +100,10 @@ jupyter notebook
 ```
 Go to summer_school_[experiment name], then summer_school_[experiment name]_viz.ipnb. E.g., `summer_school_visual_n170` --> `summer_school_visual_n170_viz.ipnb`  
 Replace the subject ID # and session #, then on the menu select `Cell` --> `Run All`
+
+## More analyses to explore
+* Source localization  
+* Temporal evolution across electrodes  
+* Other spectral estimation techniques either from libraries or even from scratch  
+* Power band analysis  
+* Integration in a simple BCI selection  
