@@ -16,7 +16,7 @@ from eegnb import generate_save_fn
 from eegnb.stimuli import SUMMER_SCHOOL, FACE_HOUSE
 
 ITI=0.4
-SOA=1
+SOA=5
 JITTER=0.2
 NTRIALS=2010
 STI_LOC_WIDTH=10

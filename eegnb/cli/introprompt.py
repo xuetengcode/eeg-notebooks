@@ -79,6 +79,9 @@ def device_prompt() -> EEG:
             eeg_device = EEG(device=board_code, ip_addr=ip_address)
         else:
             eeg_device = EEG(device=board_code, mac_addr=ganglion_mac_address)
+    elif board_code == 'none':
+        print('[log] Device chosen as None. Entering simulation mode')
+        eeg_device = None
     else:
         eeg_device = EEG(device=board_code)
 
@@ -160,9 +163,14 @@ def intro_prompt() -> Tuple[EEG, str, int, str]:
     #input("Press [ENTER] when ready to begin...")
 
     # generate the save file name
-    save_fn = generate_save_fn(
-        eeg_device.device_name, exp_selection, subj_id, session_nb 
-    )
+    if eeg_device:
+        save_fn = generate_save_fn(
+            eeg_device.device_name, exp_selection, subj_id, session_nb 
+        )
+    else:
+        save_fn = generate_save_fn(
+            'none', exp_selection, subj_id, session_nb 
+        )
 
     return eeg_device, exp_selection, duration, str(save_fn), img_path
 
