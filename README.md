@@ -95,7 +95,7 @@ It will create a symbolic link from the hidden data folder to `~/eegnb`
 ## Visualize the data
 Open a new terminal window:
 ```
-cd eeg-botebooks\eegnb\summerschool
+cd ~\eeg-notebooks\eegnb\summerschool
 jupyter notebook
 ```
 Go to summer_school_[experiment name], then summer_school_[experiment name]_viz.ipnb. E.g., `summer_school_visual_n170` --> `summer_school_visual_n170_viz.ipnb`  
