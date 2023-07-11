@@ -57,9 +57,8 @@ Then turn on your device:
 Muse - short press once on the button to turn on. Press and hold to turn off.  
 Unicorn - press and hold the power button until the light starts to blink, same way to turn off.
 
-
-Now you select the device in the terminal:
-
+Now you select the device in the terminal:  
+No device - `0`  
 Muse 2 - `6`  
 Muse s - `8`  
 Unicorn - `13`
