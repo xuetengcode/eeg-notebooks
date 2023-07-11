@@ -73,7 +73,7 @@ In the experiment code, you can change the parameters to make your own experimen
 
 `SOA` - the duration of showing each image;  
 `ITI` - the wait time between showings;  
-`images` - stimulus categories. You can change or delete the image categories, e.g., `faces` --> `cats`. Image folders are located at `~\eeg-notebooks\eegnb\stimuli\visual\summer_school`, you can add new categories by adding new folders of images at this location;  
+`images` - stimulus categories. You can change or delete the image categories, e.g., `faces` --> `cats`. Image folders are located at `~/eeg-notebooks/eegnb/stimuli/visual/summer_school`, you can add new categories by adding new folders of images at this location;  
 `NTRIALS` - leave it as 2010;  
 `BACKGROUND_COLOR` - background color;  
 `FIXATION_COLOR` - fixation (dot in the middle) color;  
