@@ -57,9 +57,8 @@ Then turn on your device:
 Muse - short press once on the button to turn on. Press and hold to turn off.  
 Unicorn - press and hold the power button until the light starts to blink, same way to turn off.
 
-
-Now you select the device in the terminal:
-
+Now you select the device in the terminal:  
+No device - `0`  
 Muse 2 - `6`  
 Muse s - `8`  
 Unicorn - `13`
@@ -74,7 +73,7 @@ In the experiment code, you can change the parameters to make your own experimen
 
 `SOA` - the duration of showing each image;  
 `ITI` - the wait time between showings;  
-`images` - stimulus categories. You can change or delete the image categories, e.g., `faces` --> `cats`. Image folders are located at `~\eeg-notebooks\eegnb\stimuli\visual\summer_school`, you can add new categories by adding new folders of images at this location;  
+`images` - stimulus categories. You can change or delete the image categories, e.g., `faces` --> `cats`. Image folders are located at `~/eeg-notebooks/eegnb/stimuli/visual/summer_school`, you can add new categories by adding new folders of images at this location;  
 `NTRIALS` - leave it as 2010;  
 `BACKGROUND_COLOR` - background color;  
 `FIXATION_COLOR` - fixation (dot in the middle) color;  
@@ -96,8 +95,15 @@ It will create a symbolic link from the hidden data folder to `~/eegnb`
 ## Visualize the data
 Open a new terminal window:
 ```
-cd eeg-botebooks\eegnb\summerschool
+cd ~/eeg-notebooks/eegnb/summerschool
 jupyter notebook
 ```
 Go to summer_school_[experiment name], then summer_school_[experiment name]_viz.ipnb. E.g., `summer_school_visual_n170` --> `summer_school_visual_n170_viz.ipnb`  
 Replace the subject ID # and session #, then on the menu select `Cell` --> `Run All`
+
+## More analyses to explore
+* Source localization  
+* Temporal evolution across electrodes  
+* Other spectral estimation techniques either from libraries or even from scratch  
+* Power band analysis  
+* Integration in a simple BCI selection  
