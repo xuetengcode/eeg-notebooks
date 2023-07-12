@@ -24,11 +24,7 @@ from eegnb.summerschool import Experiment_modified as Experiment
 SOA=2 # 0.3 image show time
 ITI=1 # wait time between images
 # mountains, faces, houses
-images = ['houses', 'faces']
-
-FOLDER1='faces'
-
-FOLDER2='houses'
+images = ['houses', 'faces', 'cats', 'dogs']
 
 BACKGROUND_COLOR=[1,0.6,0.6]
 JITTER=0.2
