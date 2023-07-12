@@ -24,6 +24,8 @@ from eegnb.summerschool import Experiment_modified as Experiment
 SOA=2 # 0.3 image show time
 ITI=1 # wait time between images
 # mountains, faces, houses
+images = ['houses', 'faces']
+
 FOLDER1='faces'
 
 FOLDER2='houses'
@@ -50,28 +52,29 @@ class Summer_School_VisualN170(Experiment.BaseExperiment):
         load_image = lambda fn: visual.ImageStim(win=self.window, image=fn, size=IMG_DISPLAY_SIZE)
 
         # Setting up images for the stimulus
-        self.scene1 = list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, FOLDER1, '*')))) # face
-        
-        self.scene2 = list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, FOLDER2, '*')))) # house
-
+        #self.scene1 = list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, FOLDER1, '*')))) # face
+        #self.scene2 = list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, FOLDER2, '*')))) # house
+        self.imagelist = []
+        for img in images:
+            self.imagelist.append(list(map(load_image, glob(os.path.join(SUMMER_SCHOOL, img, '*')))))
+        self.stimulus = images
         # Return the list of images as a stimulus object
-        return [self.scene1, self.scene2]
+        
         
     def present_stimulus(self, idx : int, trial):
-        
-        # Get the label of the trial
-        label = self.trials["parameter"].iloc[idx]
+        self.load_stimulus()
+
         # Get the image to be presented
-        image = choice(self.scene1 if label == 1 else self.scene2)
+        flk_sti = choice([x for x in range(len(self.imagelist))])
+        image_choice = choice(self.imagelist[flk_sti])
+
         # Draw the image
-        image.draw()
+        image_choice.draw()
         self.res_output_events[idx] = {
-            'categories': FOLDER1 if label == 1 else FOLDER2,
+            'categories': self.stimulus[flk_sti],
         }
         self.res_output_dict = {
-            'categories': {
-                1: FOLDER1, 
-                2: FOLDER2},
+            'categories': {idx+1: self.stimulus[idx] for idx in range(len(self.stimulus))},
             'ITI': ITI,
             'SOA': SOA
         }
