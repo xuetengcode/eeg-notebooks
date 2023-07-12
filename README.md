@@ -48,6 +48,9 @@ pip install -e .
 ```
 
 ## Run the experiment
+If you are using a Unicorn: in folder `~\eeg-notebooks\eegnb\devices\`, file `eeg.py`, line #`68`, specify your serial number, e.g., `'UN-2022.03.26'`:
+![System Diagram](SpecifyYourDevice.jpeg)
+
 In the terminal, type:
 ```
 eegnb runexp -ip
