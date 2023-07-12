@@ -75,12 +75,13 @@ class Summer_School_VisualN170(Experiment.BaseExperiment):
             'SOA': SOA
         }
         # Pushing the sample to the EEG
+        marker_content = flk_sti + 1 #flk_frq + 1
         if self.eeg:
             timestamp = time()
             if self.eeg.backend == "muselsl":
-                marker = [self.markernames[label]]
+                marker = [marker_content]
             else:
-                marker = self.markernames[label]
+                marker = marker_content
             self.eeg.push_sample(marker=marker, timestamp=timestamp)
         
         self.window.flip()
